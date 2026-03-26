@@ -118,4 +118,36 @@ export const productService = {
   },
 };
 
+export const orderService = {
+  getMyOrders: async () => {
+    const response = await api.get('/orders/my-orders');
+    return response.data;
+  },
+
+  getAll: async () => {
+    const response = await api.get('/orders');
+    return response.data;
+  },
+
+  getById: async (id) => {
+    const response = await api.get(`/orders/${id}`);
+    return response.data;
+  },
+
+  create: async (orderData) => {
+    const response = await api.post('/orders', orderData);
+    return response.data;
+  },
+
+  updateStatus: async (id, status) => {
+    const response = await api.put(`/orders/${id}/status`, { status });
+    return response.data;
+  },
+
+  cancel: async (id) => {
+    const response = await api.post(`/orders/${id}/cancel`);
+    return response.data;
+  },
+};
+
 export default api;

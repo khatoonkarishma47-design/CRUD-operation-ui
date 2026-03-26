@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { productService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
-const ProductList = () => {
+const ProductList = ({ cartItems = [], addToCart }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
@@ -61,6 +62,12 @@ const ProductList = () => {
         <h1>Product Management</h1>
         <div className="header-actions">
           <span className="welcome-text">Welcome, {user?.username}</span>
+          <Link to="/orders" className="btn btn-info">
+            My Orders
+          </Link>
+          <Link to="/cart" className="btn btn-warning cart-btn">
+            Cart ({cartItems.reduce((sum, item) => sum + item.quantity, 0)})
+          </Link>
           <button onClick={logout} className="btn btn-secondary">
             Logout
           </button>
@@ -105,6 +112,13 @@ const ProductList = () => {
                   className="btn btn-danger"
                 >
                   Delete
+                </button>
+                <button
+                  onClick={() => addToCart(product)}
+                  className="btn btn-success"
+                  disabled={product.quantity === 0}
+                >
+                  {product.quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
                 </button>
               </div>
             </div>
