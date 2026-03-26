@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { orderService } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 const Cart = ({ cartItems, updateQuantity, removeFromCart, clearCart }) => {
   const [shippingAddress, setShippingAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   const totalAmount = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -48,16 +50,50 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, clearCart }) => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="cart-container">
-        <h2>Shopping Cart</h2>
-        <p className="empty-cart">Your cart is empty</p>
+      <div className="container">
+        <header className="header">
+          <h1>Shopping Cart</h1>
+          <div className="header-actions">
+            <span className="welcome-text">Welcome, {user?.username}</span>
+            <Link to="/products" className="btn btn-info">
+              Products
+            </Link>
+            <Link to="/orders" className="btn btn-warning">
+              My Orders
+            </Link>
+            <button onClick={logout} className="btn btn-secondary">
+              Logout
+            </button>
+          </div>
+        </header>
+        <div className="cart-container">
+          <p className="empty-cart">Your cart is empty</p>
+          <Link to="/products" className="btn btn-primary">
+            Continue Shopping
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="cart-container">
-      <h2>Shopping Cart</h2>
+    <div className="container">
+      <header className="header">
+        <h1>Shopping Cart</h1>
+        <div className="header-actions">
+          <span className="welcome-text">Welcome, {user?.username}</span>
+          <Link to="/products" className="btn btn-info">
+            Products
+          </Link>
+          <Link to="/orders" className="btn btn-warning">
+            My Orders
+          </Link>
+          <button onClick={logout} className="btn btn-secondary">
+            Logout
+          </button>
+        </div>
+      </header>
+      <div className="cart-container">
 
       {error && <div className="error-message">{error}</div>}
 
@@ -120,6 +156,7 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, clearCart }) => {
         >
           {loading ? 'Placing Order...' : 'Place Order'}
         </button>
+      </div>
       </div>
     </div>
   );
