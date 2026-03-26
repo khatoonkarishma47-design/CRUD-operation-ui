@@ -88,6 +88,34 @@ export const productService = {
   delete: async (id) => {
     await api.delete(`/products/${id}`);
   },
+
+  exportToExcel: async () => {
+    const response = await api.get('/products/export/excel', {
+      responseType: 'blob',
+    });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'Products.xlsx');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  },
+
+  exportToPdf: async () => {
+    const response = await api.get('/products/export/pdf', {
+      responseType: 'blob',
+    });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'Products.pdf');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  },
 };
 
 export default api;

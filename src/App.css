@@ -171,6 +171,26 @@ body {
   background: #c82333;
 }
 
+.btn-success {
+  background: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #218838;
+}
+
+.btn-danger-outline {
+  background: white;
+  color: #dc3545;
+  border: 2px solid #dc3545;
+}
+
+.btn-danger-outline:hover {
+  background: #dc3545;
+  color: white;
+}
+
 .auth-link {
   text-align: center;
   margin-top: 20px;
@@ -229,6 +249,9 @@ body {
 
 .actions-bar {
   margin-bottom: 30px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
 .product-grid {

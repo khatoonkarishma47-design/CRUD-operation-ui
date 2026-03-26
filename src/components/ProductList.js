@@ -35,6 +35,22 @@ const ProductList = () => {
     }
   };
 
+  const handleExportExcel = async () => {
+    try {
+      await productService.exportToExcel();
+    } catch (err) {
+      setError('Failed to export to Excel');
+    }
+  };
+
+  const handleExportPdf = async () => {
+    try {
+      await productService.exportToPdf();
+    } catch (err) {
+      setError('Failed to export to PDF');
+    }
+  };
+
   if (loading) {
     return <div className="loading">Loading products...</div>;
   }
@@ -57,6 +73,12 @@ const ProductList = () => {
         <Link to="/products/new" className="btn btn-primary">
           Add New Product
         </Link>
+        <button onClick={handleExportExcel} className="btn btn-success">
+          Download Excel
+        </button>
+        <button onClick={handleExportPdf} className="btn btn-danger-outline">
+          Download PDF
+        </button>
       </div>
 
       <div className="product-grid">
