@@ -608,6 +608,118 @@ body {
   position: relative;
 }
 
+/* Payment Styles */
+.payment-container {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: 40px auto;
+}
+
+.payment-container h2 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.order-summary {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.order-summary p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.payment-amount {
+  font-size: 1.3rem;
+  color: #667eea !important;
+}
+
+.payment-methods {
+  margin-top: 20px;
+}
+
+.payment-method-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border: 2px solid #667eea;
+  background: white;
+  color: #667eea;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.tab-btn:hover:not(.active) {
+  background: #f0f0ff;
+}
+
+.payment-form {
+  margin-top: 20px;
+}
+
+.payment-form .form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e1e1e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+}
+
+.upi-apps {
+  margin: 15px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.upi-apps p {
+  margin: 0 0 10px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.upi-icons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.upi-icon {
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.payment-security {
+  margin-top: 20px;
+  text-align: center;
+  color: #28a745;
+  font-size: 0.9rem;
+}
+
 @media (max-width: 768px) {
   .header {
     flex-direction: column;

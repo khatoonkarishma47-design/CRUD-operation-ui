@@ -38,9 +38,14 @@ const Cart = ({ cartItems, updateQuantity, removeFromCart, clearCart }) => {
         })),
       };
 
-      await orderService.create(orderData);
+      const order = await orderService.create(orderData);
       clearCart();
-      navigate('/orders');
+      navigate('/payment', {
+        state: {
+          orderId: order.id,
+          totalAmount: order.totalAmount,
+        },
+      });
     } catch (err) {
       setError(err.response?.data || 'Failed to place order');
     } finally {

@@ -118,6 +118,41 @@ export const productService = {
   },
 };
 
+export const paymentService = {
+  processUpi: async (orderId, upiId) => {
+    const response = await api.post('/payments/upi', { orderId, upiId });
+    return response.data;
+  },
+
+  processDebitCard: async (orderId, cardDetails) => {
+    const response = await api.post('/payments/debit-card', {
+      orderId,
+      ...cardDetails,
+    });
+    return response.data;
+  },
+
+  getPaymentByOrder: async (orderId) => {
+    const response = await api.get(`/payments/order/${orderId}`);
+    return response.data;
+  },
+
+  getMyPayments: async () => {
+    const response = await api.get('/payments/my-payments');
+    return response.data;
+  },
+
+  checkStatus: async (paymentId) => {
+    const response = await api.get(`/payments/${paymentId}/status`);
+    return response.data;
+  },
+
+  refund: async (paymentId) => {
+    const response = await api.post(`/payments/${paymentId}/refund`);
+    return response.data;
+  },
+};
+
 export const orderService = {
   getMyOrders: async () => {
     const response = await api.get('/orders/my-orders');
