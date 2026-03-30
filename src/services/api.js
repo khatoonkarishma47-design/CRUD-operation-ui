@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5034/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5034/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -87,101 +87,6 @@ export const productService = {
   
   delete: async (id) => {
     await api.delete(`/products/${id}`);
-  },
-
-  exportToExcel: async () => {
-    const response = await api.get('/products/export/excel', {
-      responseType: 'blob',
-    });
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'Products.xlsx');
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.URL.revokeObjectURL(url);
-  },
-
-  exportToPdf: async () => {
-    const response = await api.get('/products/export/pdf', {
-      responseType: 'blob',
-    });
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'Products.pdf');
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.URL.revokeObjectURL(url);
-  },
-};
-
-export const paymentService = {
-  processUpi: async (orderId, upiId) => {
-    const response = await api.post('/payments/upi', { orderId, upiId });
-    return response.data;
-  },
-
-  processDebitCard: async (orderId, cardDetails) => {
-    const response = await api.post('/payments/debit-card', {
-      orderId,
-      ...cardDetails,
-    });
-    return response.data;
-  },
-
-  getPaymentByOrder: async (orderId) => {
-    const response = await api.get(`/payments/order/${orderId}`);
-    return response.data;
-  },
-
-  getMyPayments: async () => {
-    const response = await api.get('/payments/my-payments');
-    return response.data;
-  },
-
-  checkStatus: async (paymentId) => {
-    const response = await api.get(`/payments/${paymentId}/status`);
-    return response.data;
-  },
-
-  refund: async (paymentId) => {
-    const response = await api.post(`/payments/${paymentId}/refund`);
-    return response.data;
-  },
-};
-
-export const orderService = {
-  getMyOrders: async () => {
-    const response = await api.get('/orders/my-orders');
-    return response.data;
-  },
-
-  getAll: async () => {
-    const response = await api.get('/orders');
-    return response.data;
-  },
-
-  getById: async (id) => {
-    const response = await api.get(`/orders/${id}`);
-    return response.data;
-  },
-
-  create: async (orderData) => {
-    const response = await api.post('/orders', orderData);
-    return response.data;
-  },
-
-  updateStatus: async (id, status) => {
-    const response = await api.put(`/orders/${id}/status`, { status });
-    return response.data;
-  },
-
-  cancel: async (id) => {
-    const response = await api.post(`/orders/${id}/cancel`);
-    return response.data;
   },
 };
 
