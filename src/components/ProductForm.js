@@ -18,23 +18,22 @@ const ProductForm = () => {
 
   useEffect(() => {
     if (isEdit) {
+      const fetchProduct = async () => {
+        try {
+          const product = await productService.getById(id);
+          setFormData({
+            name: product.name,
+            description: product.description,
+            price: product.price.toString(),
+            quantity: product.quantity.toString(),
+          });
+        } catch (err) {
+          setError('Failed to fetch product');
+        }
+      };
       fetchProduct();
     }
-  }, [id]);
-
-  const fetchProduct = async () => {
-    try {
-      const product = await productService.getById(id);
-      setFormData({
-        name: product.name,
-        description: product.description,
-        price: product.price.toString(),
-        quantity: product.quantity.toString(),
-      });
-    } catch (err) {
-      setError('Failed to fetch product');
-    }
-  };
+  }, [id, isEdit]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
