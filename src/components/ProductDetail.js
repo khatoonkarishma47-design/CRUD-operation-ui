@@ -10,19 +10,18 @@ const ProductDetail = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const data = await productService.getById(id);
+        setProduct(data);
+      } catch (err) {
+        setError('Failed to fetch product');
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchProduct();
   }, [id]);
-
-  const fetchProduct = async () => {
-    try {
-      const data = await productService.getById(id);
-      setProduct(data);
-    } catch (err) {
-      setError('Failed to fetch product');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
